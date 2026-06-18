@@ -1,9 +1,0 @@
-node_modules/
-.env
-*.db
-uploads/
-logs/
-.DS_Store
-template/
-.opencode/
-.mulerun.env
