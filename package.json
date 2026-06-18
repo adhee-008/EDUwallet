@@ -1,18 +1,17 @@
 {
-  "name": "workspace",
+  "name": "eduwallet",
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
+  "description": "EDUwallet - Academic Resource Hub",
   "dependencies": {
     "express": "^5.2.1",
     "multer": "^2.2.0",
-    "sqlite3": "^6.0.1"
+    "better-sqlite3": "^11.6.0"
   }
 }
