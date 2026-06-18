@@ -37,6 +37,7 @@ const db = new Database(path.join(__dirname, 'eduwallet.db'));
 db.exec(`CREATE TABLE IF NOT EXISTS papers (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     examName TEXT NOT NULL,
+    grade TEXT NOT NULL,
     subject TEXT NOT NULL,
     year TEXT NOT NULL,
     fileName TEXT NOT NULL,
@@ -63,7 +64,7 @@ app.get('/api/papers', (req, res) => {
 // Upload a new paper
 app.post('/api/papers', upload.fields([{ name: 'questionPaper', maxCount: 1 }, { name: 'answerKey', maxCount: 1 }]), (req, res) => {
     try {
-        const { examName, subject, year } = req.body;
+        const { examName, grade, subject, year } = req.body;
         const questionFile = req.files['questionPaper'] ? req.files['questionPaper'][0] : null;
         const answerFile = req.files['answerKey'] ? req.files['answerKey'][0] : null;
 
@@ -73,9 +74,10 @@ app.post('/api/papers', upload.fields([{ name: 'questionPaper', maxCount: 1 }, {
 
         const date = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 
-        const stmt = db.prepare(`INSERT INTO papers (examName, subject, year, fileName, filePath, answerKeyFileName, answerKeyPath, date) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`);
+        const stmt = db.prepare(`INSERT INTO papers (examName, grade, subject, year, fileName, filePath, answerKeyFileName, answerKeyPath, date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`);
         const result = stmt.run(
             examName,
+            grade,
             subject,
             year,
             questionFile.originalname,
