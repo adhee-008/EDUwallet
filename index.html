@@ -312,16 +312,13 @@
                                 <button class="p-1.5 hover:bg-slate-200 rounded transition-colors"><i data-lucide="zoom-out" class="w-4 h-4"></i></button>
                             </div>
                         </div>
-                        <div class="flex-1 flex items-center justify-center bg-slate-200 p-4 md:p-8 overflow-y-auto">
-                            <div class="bg-white w-full max-w-2xl min-h-[600px] shadow-md p-8 text-slate-400 flex flex-col items-center justify-center text-center rounded-lg">
-                                <div class="w-20 h-20 bg-indigo-50 rounded-2xl flex items-center justify-center mb-4">
-                                    <i data-lucide="book-open" class="w-10 h-10 text-indigo-500"></i>
+                        <div class="flex-1 bg-slate-200 overflow-hidden relative">
+                            <div id="viewModalContent" class="w-full h-full flex items-center justify-center">
+                                <!-- Iframe will be injected here by openViewModal -->
+                                <div class="text-slate-400 text-center">
+                                    <i data-lucide="loader" class="w-8 h-8 animate-spin mx-auto mb-2"></i>
+                                    <p>Loading document...</p>
                                 </div>
-                                <p class="text-lg font-semibold text-slate-700 mb-2">Document Viewer</p>
-                                <p class="text-sm text-slate-500 mb-6 max-w-sm">In a production environment, this area renders the actual PDF using PDF.js or an embedded iframe, allowing students to read the paper directly in the browser.</p>
-                                <a id="viewModalDownloadLink" href="#" class="px-5 py-2.5 bg-indigo-600 text-white rounded-xl text-sm font-medium hover:bg-indigo-700 transition-all shadow-md hover:shadow-lg flex items-center gap-2">
-                                    <i data-lucide="download" class="w-4 h-4"></i> Download File Instead
-                                </a>
                             </div>
                         </div>
                     </div>
@@ -372,7 +369,7 @@
 
         // --- STATE ---
         let currentUser = JSON.parse(localStorage.getItem('eduwallet_user')) || { role: 'guest', school: null };
-        let papers = JSON.parse(localStorage.getItem('eduwallet_papers')) || [];
+        let papers = []; // Will be fetched from backend
         let currentFile = null;
         let currentAnswerKey = null;
 
@@ -534,34 +531,53 @@
             answerKeyPreview.classList.add('hidden');
         });
 
-        document.getElementById('uploadForm').addEventListener('submit', (e) => {
+        document.getElementById('uploadForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             if (currentUser.role !== 'teacher') return showToast('Only authenticated teachers can upload.', 'error');
             if (!currentFile) return showToast('Please select a question paper.', 'error');
 
-            const newPaper = {
-                id: Date.now(),
-                examName: document.getElementById('examName').value,
-                subject: document.getElementById('subject').value,
-                year: document.getElementById('year').value,
-                fileName: currentFile.name,
-                answerKeyFileName: currentAnswerKey ? currentAnswerKey.name : null,
-                date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
-            };
+            const formData = new FormData();
+            formData.append('examName', document.getElementById('examName').value);
+            formData.append('subject', document.getElementById('subject').value);
+            formData.append('year', document.getElementById('year').value);
+            formData.append('questionPaper', currentFile);
+            if (currentAnswerKey) {
+                formData.append('answerKey', currentAnswerKey);
+            }
 
-            papers.unshift(newPaper);
-            localStorage.setItem('eduwallet_papers', JSON.stringify(papers));
-            
-            document.getElementById('uploadForm').reset();
-            currentFile = null; currentAnswerKey = null;
-            fileInput.value = ''; answerKeyInput.value = '';
-            dropZoneContent.classList.remove('hidden'); filePreview.classList.add('hidden');
-            answerKeyContent.classList.remove('hidden'); answerKeyPreview.classList.add('hidden');
-            
-            updateFilterOptions();
-            renderPapers();
-            showToast('Question paper uploaded successfully!');
+            try {
+                const response = await fetch('/api/papers', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) throw new Error('Upload failed');
+
+                document.getElementById('uploadForm').reset();
+                currentFile = null; currentAnswerKey = null;
+                fileInput.value = ''; answerKeyInput.value = '';
+                dropZoneContent.classList.remove('hidden'); filePreview.classList.add('hidden');
+                answerKeyContent.classList.remove('hidden'); answerKeyPreview.classList.add('hidden');
+                
+                await fetchPapers(); // Refresh list from backend
+                showToast('Question paper uploaded successfully!');
+            } catch (error) {
+                console.error(error);
+                showToast('Failed to upload paper. Please try again.', 'error');
+            }
         });
+
+        // --- BACKEND API CALLS ---
+        async function fetchPapers() {
+            try {
+                const response = await fetch('/api/papers');
+                papers = await response.json();
+                updateFilterOptions();
+                renderPapers();
+            } catch (error) {
+                console.error('Failed to fetch papers:', error);
+            }
+        }
 
         // --- RENDER & FILTER ---
         function updateFilterOptions() {
@@ -627,16 +643,16 @@
                         </div>
                         <div class="flex items-center gap-2 sm:justify-end">
                             ${canDelete ? `<button onclick="deletePaper(${paper.id})" class="p-2.5 rounded-xl text-slate-400 hover:text-red-500 hover:bg-red-50 transition-all opacity-0 group-hover:opacity-100" title="Delete"><i data-lucide="trash-2" class="w-5 h-5"></i></button>` : ''}
-                            <button onclick="openViewModal('${paper.fileName}')" class="px-4 py-2.5 rounded-xl bg-indigo-50 text-indigo-700 text-sm font-medium hover:bg-indigo-100 transition-all flex items-center gap-2" title="Read Online">
+                            <button onclick="openViewModal(${paper.id}, '${paper.fileName}')" class="px-4 py-2.5 rounded-xl bg-indigo-50 text-indigo-700 text-sm font-medium hover:bg-indigo-100 transition-all flex items-center gap-2" title="Read Online">
                                 <i data-lucide="book-open" class="w-4 h-4"></i> Read
                             </button>
-                            <button class="px-4 py-2.5 rounded-xl bg-slate-900 text-white text-sm font-medium hover:bg-slate-800 transition-all shadow-md hover:shadow-lg flex items-center gap-2" title="Download Question Paper">
+                            <a href="/uploads/${paper.filePath.split('/').pop()}" download="${paper.fileName}" class="px-4 py-2.5 rounded-xl bg-slate-900 text-white text-sm font-medium hover:bg-slate-800 transition-all shadow-md hover:shadow-lg flex items-center gap-2" title="Download Question Paper">
                                 <i data-lucide="download" class="w-4 h-4"></i> Q.Paper
-                            </button>
+                            </a>
                             ${paper.answerKeyFileName ? `
-                            <button class="px-4 py-2.5 rounded-xl bg-amber-500 text-white text-sm font-medium hover:bg-amber-600 transition-all shadow-md hover:shadow-lg flex items-center gap-2" title="Download Answer Key">
+                            <a href="/uploads/${paper.answerKeyPath.split('/').pop()}" download="${paper.answerKeyFileName}" class="px-4 py-2.5 rounded-xl bg-amber-500 text-white text-sm font-medium hover:bg-amber-600 transition-all shadow-md hover:shadow-lg flex items-center gap-2" title="Download Answer Key">
                                 <i data-lucide="key" class="w-4 h-4"></i> Key
-                            </button>` : ''}
+                            </a>` : ''}
                         </div>
                     `;
                     papersList.appendChild(card);
@@ -645,13 +661,17 @@
             }
         }
 
-        window.deletePaper = function(id) {
+        window.deletePaper = async function(id) {
             if (confirm('Are you sure you want to delete this paper?')) {
-                papers = papers.filter(p => p.id !== id);
-                localStorage.setItem('eduwallet_papers', JSON.stringify(papers));
-                updateFilterOptions();
-                renderPapers();
-                showToast('Paper deleted successfully');
+                try {
+                    const response = await fetch(`/api/papers/${id}`, { method: 'DELETE' });
+                    if (!response.ok) throw new Error('Delete failed');
+                    await fetchPapers();
+                    showToast('Paper deleted successfully');
+                } catch (error) {
+                    console.error(error);
+                    showToast('Failed to delete paper.', 'error');
+                }
             }
         };
 
@@ -659,15 +679,28 @@
         document.getElementById('filterSubject').addEventListener('change', renderPapers);
 
         // --- VIEW MODAL ---
-        window.openViewModal = function(fileName) {
+        window.openViewModal = function(paperId, fileName) {
             document.getElementById('viewModalFileName').textContent = fileName;
             document.getElementById('viewModalTitle').textContent = fileName;
+            
+            // Find the paper to get the correct file path
+            const paper = papers.find(p => p.id === paperId);
+            if (paper) {
+                // Create an iframe that points to the backend file serving route
+                // The browser's native PDF viewer will handle rendering it
+                const fileUrl = `/uploads/${paper.filePath.split('/').pop()}`;
+                document.getElementById('viewModalContent').innerHTML = `
+                    <iframe src="${fileUrl}#toolbar=0" class="w-full h-full border-0" title="PDF Viewer"></iframe>
+                `;
+            }
+            
             document.getElementById('viewModal').classList.remove('hidden');
             lucide.createIcons();
         }
 
         window.closeViewModal = function() {
             document.getElementById('viewModal').classList.add('hidden');
+            document.getElementById('viewModalContent').innerHTML = ''; // Clear iframe to stop memory leaks
         }
 
         // --- AI INSIGHTS MOCK ---
@@ -755,11 +788,25 @@
         }
 
         // --- INIT ---
-        if (currentUser.role === 'teacher' && currentUser.school) {
-            showView('dashboard');
-        } else {
-            showView('landing');
+        function initApp() {
+            if (currentUser.role === 'teacher' && currentUser.school) {
+                showView('dashboard');
+                fetchPapers(); // Load papers from backend
+            } else {
+                showView('landing');
+            }
         }
+        
+        // Override showView to fetch papers when dashboard is shown
+        const originalShowView = showView;
+        showView = function(viewName) {
+            originalShowView(viewName);
+            if (viewName === 'dashboard') {
+                fetchPapers();
+            }
+        };
+
+        initApp();
     </script>
 </body>
 </html>
