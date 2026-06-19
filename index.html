@@ -165,31 +165,17 @@
                                 <input type="text" id="examName" placeholder="e.g., First Terminal Exam, Annual Examination 2024" required class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all">
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-slate-700 mb-1.5">Grade</label>
-                                <select id="grade" required class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all">
-                                    <option value="" disabled selected>Select a grade</option>
-                                    <option value="8th">8th Grade</option>
-                                    <option value="9th">9th Grade</option>
-                                    <option value="10th">10th Grade</option>
-                                    <option value="11th">11th Grade</option>
-                                    <option value="12th">12th Grade</option>
-                                </select>
-                            </div>
-                            <div>
                                 <label class="block text-sm font-medium text-slate-700 mb-1.5">Subject</label>
-                                <div class="relative">
-                                    <input type="text" id="subjectSearch" placeholder="Select a grade first, then search subjects..." disabled class="w-full px-4 py-3 rounded-xl bg-slate-100 border border-slate-200 text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all cursor-not-allowed">
-                                    <div id="subjectDropdown" class="hidden absolute z-20 w-full bg-white border border-slate-200 rounded-xl shadow-xl max-h-60 overflow-y-auto custom-scroll mt-1">
-                                        <!-- Populated by JS -->
-                                    </div>
-                                    <input type="hidden" id="subject" required>
-                                    <div id="selectedSubjectDisplay" class="hidden mt-2 px-4 py-2 bg-indigo-50 text-indigo-700 rounded-lg text-sm font-medium flex items-center justify-between">
-                                        <span id="selectedSubjectName"></span>
-                                        <button type="button" onclick="clearSubjectSelection()" class="text-indigo-400 hover:text-indigo-700">
-                                            <i data-lucide="x" class="w-4 h-4"></i>
-                                        </button>
-                                    </div>
-                                </div>
+                                <select id="subject" required class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all">
+                                    <option value="" disabled selected>Select a subject</option>
+                                    <option value="Mathematics">Mathematics</option>
+                                    <option value="Physics">Physics</option>
+                                    <option value="Chemistry">Chemistry</option>
+                                    <option value="Biology">Biology</option>
+                                    <option value="History">History</option>
+                                    <option value="Literature">Literature</option>
+                                    <option value="Computer Science">Computer Science</option>
+                                </select>
                             </div>
                             <div>
                                 <label class="block text-sm font-medium text-slate-700 mb-1.5">Year / Semester</label>
@@ -237,125 +223,31 @@
 
                 <!-- Recent Uploads Dashboard -->
                 <div id="dashboardListSection" class="lg:col-span-5 transition-all duration-300">
-                    
-                    <!-- Student School Search Section -->
-                    <div id="studentSchoolSearch" class="hidden mb-8">
-                        <div class="bg-white rounded-3xl p-8 shadow-xl shadow-slate-200/50 border border-slate-100">
-                            <div class="text-center mb-6">
-                                <div class="w-16 h-16 bg-indigo-50 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                                    <i data-lucide="search" class="w-8 h-8 text-indigo-600"></i>
-                                </div>
-                                <h3 class="text-2xl font-bold text-slate-900 mb-2">Find Your Papers</h3>
-                                <p class="text-slate-500">Select your school, grade, and subject to view question papers</p>
-                            </div>
-                            
-                            <div class="max-w-2xl mx-auto space-y-4">
-                                <!-- School Selection -->
-                                <div>
-                                    <label class="block text-sm font-medium text-slate-700 mb-1.5">School</label>
-                                    <div class="relative">
-                                        <input type="text" id="studentSchoolSearchInput" placeholder="Type your school name..." class="w-full px-4 py-3 pl-11 rounded-xl bg-slate-50 border border-slate-200 text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all">
-                                        <i data-lucide="search" class="w-5 h-5 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2"></i>
-                                    </div>
-                                    <div id="studentSchoolDropdown" class="hidden mt-2 bg-white border border-slate-200 rounded-xl shadow-xl max-h-60 overflow-y-auto custom-scroll text-left">
-                                        <!-- Populated by JS -->
-                                    </div>
-                                    <div id="selectedStudentSchool" class="hidden mt-2 p-3 bg-indigo-50 border border-indigo-200 rounded-xl">
-                                        <div class="flex items-center justify-between">
-                                            <div class="flex items-center gap-3">
-                                                <i data-lucide="school" class="w-5 h-5 text-indigo-600"></i>
-                                                <span id="selectedStudentSchoolName" class="font-semibold text-indigo-900 text-sm"></span>
-                                            </div>
-                                            <button onclick="clearStudentSchoolSelection()" class="text-indigo-400 hover:text-indigo-700 transition-colors">
-                                                <i data-lucide="x" class="w-4 h-4"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Grade Selection -->
-                                <div>
-                                    <label class="block text-sm font-medium text-slate-700 mb-1.5">Grade</label>
-                                    <select id="studentGrade" disabled class="w-full px-4 py-3 rounded-xl bg-slate-100 border border-slate-200 text-slate-400 focus:outline-none transition-all cursor-not-allowed">
-                                        <option value="" disabled selected>Select school first</option>
-                                        <option value="8th">8th Grade</option>
-                                        <option value="9th">9th Grade</option>
-                                        <option value="10th">10th Grade</option>
-                                        <option value="11th">11th Grade</option>
-                                        <option value="12th">12th Grade</option>
-                                    </select>
-                                </div>
-
-                                <!-- Subject Selection -->
-                                <div>
-                                    <label class="block text-sm font-medium text-slate-700 mb-1.5">Subject</label>
-                                    <div class="relative">
-                                        <input type="text" id="studentSubjectSearch" placeholder="Select grade first" disabled class="w-full px-4 py-3 rounded-xl bg-slate-100 border border-slate-200 text-slate-400 focus:outline-none transition-all cursor-not-allowed">
-                                        <div id="studentSubjectDropdown" class="hidden absolute z-20 w-full bg-white border border-slate-200 rounded-xl shadow-xl max-h-60 overflow-y-auto custom-scroll mt-1">
-                                            <!-- Populated by JS -->
-                                        </div>
-                                        <input type="hidden" id="studentSubject">
-                                        <div id="selectedStudentSubject" class="hidden mt-2 p-3 bg-indigo-50 border border-indigo-200 rounded-xl">
-                                            <div class="flex items-center justify-between">
-                                                <div class="flex items-center gap-3">
-                                                    <i data-lucide="book-open" class="w-5 h-5 text-indigo-600"></i>
-                                                    <span id="selectedStudentSubjectName" class="font-semibold text-indigo-900 text-sm"></span>
-                                                </div>
-                                                <button onclick="clearStudentSubjectSelection()" class="text-indigo-400 hover:text-indigo-700 transition-colors">
-                                                    <i data-lucide="x" class="w-4 h-4"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Search Button -->
-                                <button id="studentSearchBtn" onclick="searchStudentPapers()" disabled class="w-full bg-indigo-600 text-white py-3.5 rounded-xl font-semibold hover:bg-indigo-700 active:scale-[0.98] transition-all shadow-lg shadow-indigo-200 flex items-center justify-center gap-2 disabled:bg-slate-300 disabled:cursor-not-allowed disabled:shadow-none">
-                                    <i data-lucide="search" class="w-5 h-5"></i>
-                                    Search Papers
-                                </button>
-                            </div>
+                    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-4">
+                        <h2 class="text-xl font-semibold text-slate-900 flex items-center gap-2">
+                            <i data-lucide="library" class="w-5 h-5 text-indigo-500"></i> Recent Uploads
+                        </h2>
+                        <div class="flex gap-2 w-full sm:w-auto">
+                            <select id="filterExam" class="flex-1 sm:flex-none px-3 py-2 rounded-lg bg-white border border-slate-200 text-sm text-slate-600 focus:outline-none focus:border-indigo-500">
+                                <option value="all">All Exams</option>
+                            </select>
+                            <select id="filterSubject" class="flex-1 sm:flex-none px-3 py-2 rounded-lg bg-white border border-slate-200 text-sm text-slate-600 focus:outline-none focus:border-indigo-500">
+                                <option value="all">All Subjects</option>
+                                <option value="Mathematics">Mathematics</option>
+                                <option value="Physics">Physics</option>
+                                <option value="Chemistry">Chemistry</option>
+                                <option value="Biology">Biology</option>
+                                <option value="History">History</option>
+                                <option value="Literature">Literature</option>
+                                <option value="Computer Science">Computer Science</option>
+                            </select>
                         </div>
                     </div>
 
-                    <div id="papersSection" class="hidden">
-                        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-4">
-                            <h2 class="text-xl font-semibold text-slate-900 flex items-center gap-2">
-                                <i data-lucide="library" class="w-5 h-5 text-indigo-500"></i> 
-                                <span id="papersSectionTitle">Recent Uploads</span>
-                            </h2>
-                            <div class="flex gap-2 w-full sm:w-auto">
-                                <select id="filterExam" class="flex-1 sm:flex-none px-3 py-2 rounded-lg bg-white border border-slate-200 text-sm text-slate-600 focus:outline-none focus:border-indigo-500">
-                                    <option value="all">All Exams</option>
-                                </select>
-                                <select id="filterSubject" class="flex-1 sm:flex-none px-3 py-2 rounded-lg bg-white border border-slate-200 text-sm text-slate-600 focus:outline-none focus:border-indigo-500">
-                                    <option value="all">All Subjects</option>
-                                    <option value="English">English</option>
-                                    <option value="Maths">Maths</option>
-                                    <option value="Science">Science</option>
-                                    <option value="Social Science">Social Science</option>
-                                    <option value="Malayalam">Malayalam</option>
-                                    <option value="Hindi">Hindi</option>
-                                    <option value="Sanskrit">Sanskrit</option>
-                                    <option value="Computer">Computer</option>
-                                    <option value="CS">CS</option>
-                                    <option value="IP">IP</option>
-                                    <option value="Physics">Physics</option>
-                                    <option value="Chemistry">Chemistry</option>
-                                    <option value="Biology">Biology</option>
-                                    <option value="Accountancy">Accountancy</option>
-                                    <option value="Economics">Economics</option>
-                                    <option value="Psychology">Psychology</option>
-                                    <option value="Business Studies">Business Studies</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div id="papersList" class="space-y-4"></div>
-                        <div id="emptyState" class="hidden text-center py-16 bg-white rounded-3xl border border-dashed border-slate-200">
-                            <i data-lucide="inbox" class="w-12 h-12 text-slate-300 mx-auto mb-4"></i>
-                            <p class="text-slate-500 font-medium">No question papers found.</p>
-                        </div>
+                    <div id="papersList" class="space-y-4"></div>
+                    <div id="emptyState" class="hidden text-center py-16 bg-white rounded-3xl border border-dashed border-slate-200">
+                        <i data-lucide="inbox" class="w-12 h-12 text-slate-300 mx-auto mb-4"></i>
+                        <p class="text-slate-500 font-medium">No question papers found.</p>
                     </div>
                 </div>
             </div>
@@ -639,106 +531,13 @@
             answerKeyPreview.classList.add('hidden');
         });
 
-        // --- GRADE-DEPENDENT SUBJECT SELECTOR ---
-        const subjectsByGrade = {
-            '8th': ['English', 'Maths', 'Science', 'Social Science', 'Malayalam', 'Hindi', 'Sanskrit', 'Computer'],
-            '9th': ['English', 'Maths', 'Science', 'Social Science', 'Malayalam', 'Hindi', 'Sanskrit', 'Computer'],
-            '10th': ['English', 'Maths', 'Science', 'Social Science', 'Malayalam', 'Hindi', 'Sanskrit', 'Computer'],
-            '11th': ['Maths', 'CS', 'English', 'IP', 'Physics', 'Chemistry', 'Biology', 'Accountancy', 'Economics', 'Psychology', 'Business Studies'],
-            '12th': ['Maths', 'CS', 'English', 'IP', 'Physics', 'Chemistry', 'Biology', 'Accountancy', 'Economics', 'Psychology', 'Business Studies']
-        };
-
-        const gradeSelect = document.getElementById('grade');
-        const subjectSearch = document.getElementById('subjectSearch');
-        const subjectDropdown = document.getElementById('subjectDropdown');
-        const subjectInput = document.getElementById('subject');
-        const selectedSubjectDisplay = document.getElementById('selectedSubjectDisplay');
-        const selectedSubjectName = document.getElementById('selectedSubjectName');
-
-        gradeSelect.addEventListener('change', () => {
-            // Reset subject selection when grade changes
-            subjectInput.value = '';
-            selectedSubjectDisplay.classList.add('hidden');
-            subjectSearch.value = '';
-            
-            // Enable subject search
-            subjectSearch.disabled = false;
-            subjectSearch.classList.remove('bg-slate-100', 'cursor-not-allowed');
-            subjectSearch.classList.add('bg-slate-50');
-            subjectSearch.placeholder = 'Search subjects...';
-            
-            // Show all subjects for selected grade
-            renderSubjectDropdown('');
-        });
-
-        subjectSearch.addEventListener('input', (e) => {
-            renderSubjectDropdown(e.target.value);
-        });
-
-        subjectSearch.addEventListener('focus', () => {
-            if (!subjectSearch.disabled) {
-                renderSubjectDropdown(subjectSearch.value);
-            }
-        });
-
-        document.addEventListener('click', (e) => {
-            if (!subjectSearch.contains(e.target) && !subjectDropdown.contains(e.target)) {
-                subjectDropdown.classList.add('hidden');
-            }
-        });
-
-        function renderSubjectDropdown(query) {
-            subjectDropdown.innerHTML = '';
-            const grade = gradeSelect.value;
-            
-            if (!grade) {
-                subjectDropdown.innerHTML = '<div class="p-4 text-sm text-slate-500 text-center">Please select a grade first</div>';
-                subjectDropdown.classList.remove('hidden');
-                return;
-            }
-
-            const subjects = subjectsByGrade[grade] || [];
-            const filtered = query ? subjects.filter(s => s.toLowerCase().includes(query.toLowerCase())) : subjects;
-            
-            if (filtered.length === 0) {
-                subjectDropdown.innerHTML = '<div class="p-4 text-sm text-slate-500 text-center">No subjects found</div>';
-            } else {
-                filtered.forEach(subject => {
-                    const item = document.createElement('div');
-                    item.className = 'px-4 py-2.5 text-sm text-slate-700 hover:bg-indigo-50 hover:text-indigo-700 cursor-pointer transition-colors';
-                    item.textContent = subject;
-                    item.onclick = () => selectSubject(subject);
-                    subjectDropdown.appendChild(item);
-                });
-            }
-            subjectDropdown.classList.remove('hidden');
-        }
-
-        function selectSubject(subjectName) {
-            subjectInput.value = subjectName;
-            selectedSubjectName.textContent = subjectName;
-            selectedSubjectDisplay.classList.remove('hidden');
-            subjectSearch.classList.add('hidden');
-            subjectDropdown.classList.add('hidden');
-        }
-
-        function clearSubjectSelection() {
-            subjectInput.value = '';
-            selectedSubjectDisplay.classList.add('hidden');
-            subjectSearch.classList.remove('hidden');
-            subjectSearch.value = '';
-            subjectSearch.focus();
-        }
-
         document.getElementById('uploadForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             if (currentUser.role !== 'teacher') return showToast('Only authenticated teachers can upload.', 'error');
             if (!currentFile) return showToast('Please select a question paper.', 'error');
-            if (!subjectInput.value) return showToast('Please select a subject.', 'error');
 
             const formData = new FormData();
             formData.append('examName', document.getElementById('examName').value);
-            formData.append('grade', document.getElementById('grade').value);
             formData.append('subject', document.getElementById('subject').value);
             formData.append('year', document.getElementById('year').value);
             formData.append('questionPaper', currentFile);
@@ -755,16 +554,6 @@
                 if (!response.ok) throw new Error('Upload failed');
 
                 document.getElementById('uploadForm').reset();
-                // Reset subject selector UI
-                subjectInput.value = '';
-                selectedSubjectDisplay.classList.add('hidden');
-                subjectSearch.classList.remove('hidden');
-                subjectSearch.value = '';
-                subjectSearch.disabled = true;
-                subjectSearch.classList.remove('bg-slate-50');
-                subjectSearch.classList.add('bg-slate-100', 'cursor-not-allowed');
-                subjectSearch.placeholder = 'Select a grade first, then search subjects...';
-                
                 currentFile = null; currentAnswerKey = null;
                 fileInput.value = ''; answerKeyInput.value = '';
                 dropZoneContent.classList.remove('hidden'); filePreview.classList.add('hidden');
