@@ -36,6 +36,54 @@
         .custom-scroll::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 4px; }
         .custom-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
         .custom-scroll::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        
+        /* Floating animation for decorative elements */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+        
+        @keyframes float-reverse {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(20px) rotate(-5deg); }
+        }
+        
+        @keyframes pulse-slow {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.5; }
+        }
+        
+        #landingView svg {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        #landingView svg:nth-child(even) {
+            animation: float-reverse 7s ease-in-out infinite;
+        }
+        
+        #landingView svg:nth-child(3n) {
+            animation-duration: 8s;
+        }
+        
+        #landingView .rounded-full {
+            animation: pulse-slow 4s ease-in-out infinite;
+        }
+        
+        #landingView .border-2 {
+            animation: float 9s ease-in-out infinite;
+        }
+        
+        #loginView svg {
+            animation: float 7s ease-in-out infinite;
+        }
+        
+        #loginView .rounded-full {
+            animation: pulse-slow 5s ease-in-out infinite;
+        }
+        
+        #loginView .border-2 {
+            animation: float-reverse 8s ease-in-out infinite;
+        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
@@ -65,8 +113,62 @@
     <main class="flex-grow pt-28 pb-16 px-6 max-w-7xl mx-auto w-full">
         
         <!-- VIEW 1: Landing / Role Selection -->
-        <div id="landingView" class="view-section active fade-in">
-            <div class="text-center max-w-2xl mx-auto mb-12">
+        <div id="landingView" class="view-section active fade-in relative">
+            <!-- Decorative Background Elements -->
+            <div class="absolute inset-0 overflow-hidden pointer-events-none z-0">
+                <!-- Top Left - Graduation Cap -->
+                <svg class="absolute top-20 left-10 w-20 h-20 text-indigo-300 opacity-60 rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 14l9-5-9-5-9 5 9 5z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/>
+                </svg>
+                
+                <!-- Top Right - Book -->
+                <svg class="absolute top-32 right-16 w-16 h-16 text-violet-300 opacity-55 -rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                </svg>
+                
+                <!-- Middle Left - Pencil -->
+                <svg class="absolute top-1/2 left-8 w-14 h-14 text-indigo-400 opacity-50 rotate-45" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
+                </svg>
+                
+                <!-- Middle Right - Light Bulb -->
+                <svg class="absolute top-1/2 right-12 w-16 h-16 text-amber-300 opacity-55 -rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+                </svg>
+                
+                <!-- Bottom Left - Calculator -->
+                <svg class="absolute bottom-32 left-20 w-16 h-16 text-indigo-300 opacity-55 rotate-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+                </svg>
+                
+                <!-- Bottom Right - Science Flask -->
+                <svg class="absolute bottom-24 right-24 w-20 h-20 text-violet-300 opacity-60 -rotate-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/>
+                </svg>
+                
+                <!-- Top Center - Atom -->
+                <svg class="absolute top-16 left-1/2 -translate-x-1/2 w-14 h-14 text-indigo-300 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="3" stroke-width="1.5"/>
+                    <ellipse cx="12" cy="12" rx="9" ry="4" stroke-width="1.5" transform="rotate(0 12 12)"/>
+                    <ellipse cx="12" cy="12" rx="9" ry="4" stroke-width="1.5" transform="rotate(60 12 12)"/>
+                    <ellipse cx="12" cy="12" rx="9" ry="4" stroke-width="1.5" transform="rotate(120 12 12)"/>
+                </svg>
+                
+                <!-- Scattered Small Dots -->
+                <div class="absolute top-40 left-1/4 w-3 h-3 rounded-full bg-indigo-400 opacity-60"></div>
+                <div class="absolute top-60 right-1/3 w-4 h-4 rounded-full bg-violet-400 opacity-55"></div>
+                <div class="absolute bottom-40 left-1/3 w-3 h-3 rounded-full bg-indigo-500 opacity-50"></div>
+                <div class="absolute top-1/3 right-1/4 w-3 h-3 rounded-full bg-violet-500 opacity-55"></div>
+                <div class="absolute bottom-60 right-1/2 w-4 h-4 rounded-full bg-indigo-400 opacity-50"></div>
+                
+                <!-- Floating Shapes -->
+                <div class="absolute top-48 left-16 w-10 h-10 border-2 border-indigo-300 opacity-50 rotate-45"></div>
+                <div class="absolute bottom-48 right-16 w-8 h-8 border-2 border-violet-300 opacity-55 rotate-12"></div>
+                <div class="absolute top-1/4 right-20 w-12 h-12 border-2 border-indigo-400 opacity-45 -rotate-12"></div>
+            </div>
+            
+            <div class="text-center max-w-2xl mx-auto mb-12 relative z-10">
                 <h1 class="text-4xl md:text-5xl font-bold text-slate-900 mb-4 tracking-tight">
                     Welcome to <span class="text-indigo-600">EDUwallet</span>
                 </h1>
@@ -75,7 +177,7 @@
                 </p>
             </div>
 
-            <div class="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+            <div class="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto relative z-10">
                 <div class="bg-white rounded-3xl p-8 shadow-xl shadow-slate-200/50 border border-slate-100 text-center hover:shadow-2xl transition-all cursor-pointer group" onclick="enterAsStudent()">
                     <div class="w-16 h-16 bg-emerald-50 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
                         <i data-lucide="book-open" class="w-8 h-8 text-emerald-600"></i>
@@ -101,8 +203,21 @@
         </div>
 
         <!-- VIEW 2: Teacher Login -->
-        <div id="loginView" class="view-section fade-in">
-            <div class="max-w-md mx-auto">
+        <div id="loginView" class="view-section fade-in relative">
+            <!-- Decorative Background Elements -->
+            <div class="absolute inset-0 overflow-hidden pointer-events-none">
+                <svg class="absolute top-24 left-12 w-14 h-14 text-indigo-200 opacity-35 rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                </svg>
+                <svg class="absolute bottom-32 right-16 w-12 h-12 text-violet-200 opacity-30 -rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
+                </svg>
+                <div class="absolute top-1/3 left-20 w-2 h-2 rounded-full bg-indigo-300 opacity-40"></div>
+                <div class="absolute bottom-1/3 right-24 w-3 h-3 rounded-full bg-violet-300 opacity-35"></div>
+                <div class="absolute top-1/2 left-1/4 w-6 h-6 border-2 border-indigo-200 opacity-25 rotate-45"></div>
+            </div>
+            
+            <div class="max-w-md mx-auto relative z-10">
                 <button onclick="showView('landing')" class="mb-6 flex items-center gap-2 text-slate-500 hover:text-slate-900 transition-colors text-sm font-medium">
                     <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to Home
                 </button>
@@ -165,21 +280,31 @@
                                 <input type="text" id="examName" placeholder="e.g., First Terminal Exam, Annual Examination 2024" required class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all">
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-slate-700 mb-1.5">Subject</label>
-                                <select id="subject" required class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all">
-                                    <option value="" disabled selected>Select a subject</option>
-                                    <option value="Mathematics">Mathematics</option>
-                                    <option value="Physics">Physics</option>
-                                    <option value="Chemistry">Chemistry</option>
-                                    <option value="Biology">Biology</option>
-                                    <option value="History">History</option>
-                                    <option value="Literature">Literature</option>
-                                    <option value="Computer Science">Computer Science</option>
+                                <label class="block text-sm font-medium text-slate-700 mb-1.5">Grade</label>
+                                <select id="grade" required class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all">
+                                    <option value="" disabled selected>Select a grade</option>
+                                    <option value="8th">8th Grade</option>
+                                    <option value="9th">9th Grade</option>
+                                    <option value="10th">10th Grade</option>
+                                    <option value="11th">11th Grade</option>
+                                    <option value="12th">12th Grade</option>
                                 </select>
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-slate-700 mb-1.5">Year / Semester</label>
-                                <input type="text" id="year" placeholder="e.g., Fall 2024, Grade 10" required class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all">
+                                <label class="block text-sm font-medium text-slate-700 mb-1.5">Subject</label>
+                                <div class="relative">
+                                    <input type="text" id="subjectSearch" placeholder="Select a grade first, then search subjects..." disabled class="w-full px-4 py-3 rounded-xl bg-slate-100 border border-slate-200 text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all cursor-not-allowed">
+                                    <div id="subjectDropdown" class="hidden absolute z-20 w-full bg-white border border-slate-200 rounded-xl shadow-xl max-h-60 overflow-y-auto custom-scroll mt-1">
+                                        <!-- Populated by JS -->
+                                    </div>
+                                    <input type="hidden" id="subject" required>
+                                    <div id="selectedSubjectDisplay" class="hidden mt-2 px-4 py-2 bg-indigo-50 text-indigo-700 rounded-lg text-sm font-medium flex items-center justify-between">
+                                        <span id="selectedSubjectName"></span>
+                                        <button type="button" onclick="clearSubjectSelection()" class="text-indigo-400 hover:text-indigo-700">
+                                            <i data-lucide="x" class="w-4 h-4"></i>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
 
                             <div>
@@ -223,31 +348,125 @@
 
                 <!-- Recent Uploads Dashboard -->
                 <div id="dashboardListSection" class="lg:col-span-5 transition-all duration-300">
-                    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-4">
-                        <h2 class="text-xl font-semibold text-slate-900 flex items-center gap-2">
-                            <i data-lucide="library" class="w-5 h-5 text-indigo-500"></i> Recent Uploads
-                        </h2>
-                        <div class="flex gap-2 w-full sm:w-auto">
-                            <select id="filterExam" class="flex-1 sm:flex-none px-3 py-2 rounded-lg bg-white border border-slate-200 text-sm text-slate-600 focus:outline-none focus:border-indigo-500">
-                                <option value="all">All Exams</option>
-                            </select>
-                            <select id="filterSubject" class="flex-1 sm:flex-none px-3 py-2 rounded-lg bg-white border border-slate-200 text-sm text-slate-600 focus:outline-none focus:border-indigo-500">
-                                <option value="all">All Subjects</option>
-                                <option value="Mathematics">Mathematics</option>
-                                <option value="Physics">Physics</option>
-                                <option value="Chemistry">Chemistry</option>
-                                <option value="Biology">Biology</option>
-                                <option value="History">History</option>
-                                <option value="Literature">Literature</option>
-                                <option value="Computer Science">Computer Science</option>
-                            </select>
+                    
+                    <!-- Student School Search Section -->
+                    <div id="studentSchoolSearch" class="hidden mb-8">
+                        <div class="bg-white rounded-3xl p-8 shadow-xl shadow-slate-200/50 border border-slate-100">
+                            <div class="text-center mb-6">
+                                <div class="w-16 h-16 bg-indigo-50 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                                    <i data-lucide="search" class="w-8 h-8 text-indigo-600"></i>
+                                </div>
+                                <h3 class="text-2xl font-bold text-slate-900 mb-2">Find Your Papers</h3>
+                                <p class="text-slate-500">Select your school, grade, and subject to view question papers</p>
+                            </div>
+                            
+                            <div class="max-w-2xl mx-auto space-y-4">
+                                <!-- School Selection -->
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700 mb-1.5">School</label>
+                                    <div class="relative">
+                                        <input type="text" id="studentSchoolSearchInput" placeholder="Type your school name..." class="w-full px-4 py-3 pl-11 rounded-xl bg-slate-50 border border-slate-200 text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all">
+                                        <i data-lucide="search" class="w-5 h-5 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2"></i>
+                                    </div>
+                                    <div id="studentSchoolDropdown" class="hidden mt-2 bg-white border border-slate-200 rounded-xl shadow-xl max-h-60 overflow-y-auto custom-scroll text-left">
+                                        <!-- Populated by JS -->
+                                    </div>
+                                    <div id="selectedStudentSchool" class="hidden mt-2 p-3 bg-indigo-50 border border-indigo-200 rounded-xl">
+                                        <div class="flex items-center justify-between">
+                                            <div class="flex items-center gap-3">
+                                                <i data-lucide="school" class="w-5 h-5 text-indigo-600"></i>
+                                                <span id="selectedStudentSchoolName" class="font-semibold text-indigo-900 text-sm"></span>
+                                            </div>
+                                            <button onclick="clearStudentSchoolSelection()" class="text-indigo-400 hover:text-indigo-700 transition-colors">
+                                                <i data-lucide="x" class="w-4 h-4"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Grade Selection -->
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700 mb-1.5">Grade</label>
+                                    <select id="studentGrade" disabled class="w-full px-4 py-3 rounded-xl bg-slate-100 border border-slate-200 text-slate-400 focus:outline-none transition-all cursor-not-allowed">
+                                        <option value="" disabled selected>Select school first</option>
+                                        <option value="8th">8th Grade</option>
+                                        <option value="9th">9th Grade</option>
+                                        <option value="10th">10th Grade</option>
+                                        <option value="11th">11th Grade</option>
+                                        <option value="12th">12th Grade</option>
+                                    </select>
+                                </div>
+
+                                <!-- Subject Selection -->
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700 mb-1.5">Subject</label>
+                                    <div class="relative">
+                                        <input type="text" id="studentSubjectSearch" placeholder="Select grade first" disabled class="w-full px-4 py-3 rounded-xl bg-slate-100 border border-slate-200 text-slate-400 focus:outline-none transition-all cursor-not-allowed">
+                                        <div id="studentSubjectDropdown" class="hidden absolute z-20 w-full bg-white border border-slate-200 rounded-xl shadow-xl max-h-60 overflow-y-auto custom-scroll mt-1">
+                                            <!-- Populated by JS -->
+                                        </div>
+                                        <input type="hidden" id="studentSubject">
+                                        <div id="selectedStudentSubject" class="hidden mt-2 p-3 bg-indigo-50 border border-indigo-200 rounded-xl">
+                                            <div class="flex items-center justify-between">
+                                                <div class="flex items-center gap-3">
+                                                    <i data-lucide="book-open" class="w-5 h-5 text-indigo-600"></i>
+                                                    <span id="selectedStudentSubjectName" class="font-semibold text-indigo-900 text-sm"></span>
+                                                </div>
+                                                <button onclick="clearStudentSubjectSelection()" class="text-indigo-400 hover:text-indigo-700 transition-colors">
+                                                    <i data-lucide="x" class="w-4 h-4"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Search Button -->
+                                <button id="studentSearchBtn" onclick="searchStudentPapers()" disabled class="w-full bg-indigo-600 text-white py-3.5 rounded-xl font-semibold hover:bg-indigo-700 active:scale-[0.98] transition-all shadow-lg shadow-indigo-200 flex items-center justify-center gap-2 disabled:bg-slate-300 disabled:cursor-not-allowed disabled:shadow-none">
+                                    <i data-lucide="search" class="w-5 h-5"></i>
+                                    Search Papers
+                                </button>
+                            </div>
                         </div>
                     </div>
 
-                    <div id="papersList" class="space-y-4"></div>
-                    <div id="emptyState" class="hidden text-center py-16 bg-white rounded-3xl border border-dashed border-slate-200">
-                        <i data-lucide="inbox" class="w-12 h-12 text-slate-300 mx-auto mb-4"></i>
-                        <p class="text-slate-500 font-medium">No question papers found.</p>
+                    <div id="papersSection" class="hidden">
+                        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-4">
+                            <h2 class="text-xl font-semibold text-slate-900 flex items-center gap-2">
+                                <i data-lucide="library" class="w-5 h-5 text-indigo-500"></i> 
+                                <span id="papersSectionTitle">Recent Uploads</span>
+                            </h2>
+                            <div class="flex gap-2 w-full sm:w-auto">
+                                <select id="filterExam" class="flex-1 sm:flex-none px-3 py-2 rounded-lg bg-white border border-slate-200 text-sm text-slate-600 focus:outline-none focus:border-indigo-500">
+                                    <option value="all">All Exams</option>
+                                </select>
+                                <select id="filterSubject" class="flex-1 sm:flex-none px-3 py-2 rounded-lg bg-white border border-slate-200 text-sm text-slate-600 focus:outline-none focus:border-indigo-500">
+                                    <option value="all">All Subjects</option>
+                                    <option value="English">English</option>
+                                    <option value="Maths">Maths</option>
+                                    <option value="Science">Science</option>
+                                    <option value="Social Science">Social Science</option>
+                                    <option value="Malayalam">Malayalam</option>
+                                    <option value="Hindi">Hindi</option>
+                                    <option value="Sanskrit">Sanskrit</option>
+                                    <option value="Computer">Computer</option>
+                                    <option value="CS">CS</option>
+                                    <option value="IP">IP</option>
+                                    <option value="Physics">Physics</option>
+                                    <option value="Chemistry">Chemistry</option>
+                                    <option value="Biology">Biology</option>
+                                    <option value="Accountancy">Accountancy</option>
+                                    <option value="Economics">Economics</option>
+                                    <option value="Psychology">Psychology</option>
+                                    <option value="Business Studies">Business Studies</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div id="papersList" class="space-y-4"></div>
+                        <div id="emptyState" class="hidden text-center py-16 bg-white rounded-3xl border border-dashed border-slate-200">
+                            <i data-lucide="inbox" class="w-12 h-12 text-slate-300 mx-auto mb-4"></i>
+                            <p class="text-slate-500 font-medium">No question papers found.</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -407,15 +626,24 @@
                 userInfo.innerHTML = `<span class="px-3 py-1 bg-indigo-50 text-indigo-700 rounded-full text-xs font-semibold border border-indigo-100">Teacher</span> <span class="text-slate-900">${currentUser.school}</span>`;
                 navActionBtn.textContent = 'Logout';
                 navActionBtn.onclick = logout;
+                
+                // Hide student search, show papers
+                document.getElementById('studentSchoolSearch').classList.add('hidden');
+                document.getElementById('papersSection').classList.remove('hidden');
             } else {
                 teacherUploadSection.classList.add('hidden');
                 dashboardListSection.classList.remove('lg:col-span-3');
                 dashboardListSection.classList.add('lg:col-span-5');
-                dashboardSubtitle.textContent = "Browse and download question papers and answer keys. Log in as a teacher to upload.";
-                userInfo.innerHTML = `<span class="px-3 py-1 bg-emerald-50 text-emerald-700 rounded-full text-xs font-semibold border border-emerald-100">Student / Guest</span>`;
+                dashboardSubtitle.textContent = "Browse and download question papers and answer keys. Select your school, grade, and subject to find papers.";
+                userInfo.innerHTML = `<span class="px-3 py-1 bg-emerald-50 text-emerald-700 rounded-full text-xs font-semibold border border-emerald-100 cursor-pointer hover:bg-emerald-100 transition-colors" onclick="logout()">Student / Guest</span>`;
                 navActionBtn.textContent = 'Teacher Login';
                 navActionBtn.onclick = () => showView('login');
+                
+                // Show student search immediately, hide papers until search
+                document.getElementById('studentSchoolSearch').classList.remove('hidden');
+                document.getElementById('papersSection').classList.add('hidden');
             }
+            
             updateFilterOptions();
             renderPapers();
         }
@@ -470,6 +698,349 @@
             localStorage.setItem('eduwallet_user', JSON.stringify(currentUser));
             showToast('Logged out successfully');
             showView('landing');
+        }
+
+        // --- STUDENT SCHOOL/GRADE/SUBJECT SELECTOR ---
+        const studentSchoolSearchInput = document.getElementById('studentSchoolSearchInput');
+        const studentSchoolDropdown = document.getElementById('studentSchoolDropdown');
+        const selectedStudentSchool = document.getElementById('selectedStudentSchool');
+        const selectedStudentSchoolName = document.getElementById('selectedStudentSchoolName');
+        const studentGrade = document.getElementById('studentGrade');
+        const studentSubjectSearch = document.getElementById('studentSubjectSearch');
+        const studentSubjectDropdown = document.getElementById('studentSubjectDropdown');
+        const studentSubject = document.getElementById('studentSubject');
+        const selectedStudentSubject = document.getElementById('selectedStudentSubject');
+        const selectedStudentSubjectName = document.getElementById('selectedStudentSubjectName');
+        const studentSearchBtn = document.getElementById('studentSearchBtn');
+
+        let selectedStudentSchoolValue = null;
+
+        // Get unique schools from database
+        function getSchoolsFromDB() {
+            return [...new Set(papers.map(p => p.school))].sort();
+        }
+
+        // Get available grades for a school from database
+        function getGradesFromDB(school) {
+            return [...new Set(papers.filter(p => p.school === school).map(p => p.grade))].sort();
+        }
+
+        // Get available subjects for a school and grade from database
+        function getSubjectsFromDB(school, grade) {
+            return [...new Set(papers.filter(p => p.school === school && p.grade === grade).map(p => p.subject))].sort();
+        }
+
+        // School search
+        studentSchoolSearchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            const schoolsFromDB = getSchoolsFromDB();
+            
+            if (schoolsFromDB.length === 0) {
+                studentSchoolDropdown.innerHTML = '<div class="p-4 text-sm text-slate-500 text-center">No schools have uploaded papers yet</div>';
+                studentSchoolDropdown.classList.remove('hidden');
+                return;
+            }
+
+            const filtered = schoolsFromDB.filter(school => school.toLowerCase().includes(query));
+            studentSchoolDropdown.innerHTML = '';
+
+            if (filtered.length === 0) {
+                studentSchoolDropdown.innerHTML = '<div class="p-4 text-sm text-slate-500 text-center">No schools found</div>';
+            } else {
+                const grouped = groupSchoolsByLetter(filtered);
+                for (const [letter, schools] of Object.entries(grouped)) {
+                    const header = document.createElement('div');
+                    header.className = 'px-4 py-2 bg-slate-50 text-xs font-bold text-slate-500 uppercase tracking-wider sticky top-0';
+                    header.textContent = letter;
+                    studentSchoolDropdown.appendChild(header);
+
+                    schools.forEach(school => {
+                        const item = document.createElement('div');
+                        item.className = 'px-4 py-2.5 text-sm text-slate-700 hover:bg-indigo-50 hover:text-indigo-700 cursor-pointer transition-colors';
+                        item.textContent = school;
+                        item.onclick = () => selectStudentSchool(school);
+                        studentSchoolDropdown.appendChild(item);
+                    });
+                }
+            }
+            studentSchoolDropdown.classList.remove('hidden');
+        });
+
+        studentSchoolSearchInput.addEventListener('focus', () => {
+            if (studentSchoolSearchInput.value.length === 0) {
+                // Show all schools from DB
+                const schoolsFromDB = getSchoolsFromDB();
+                if (schoolsFromDB.length === 0) {
+                    studentSchoolDropdown.innerHTML = '<div class="p-4 text-sm text-slate-500 text-center">No schools have uploaded papers yet</div>';
+                } else {
+                    studentSchoolSearchInput.dispatchEvent(new Event('input'));
+                }
+                studentSchoolDropdown.classList.remove('hidden');
+            } else {
+                studentSchoolSearchInput.dispatchEvent(new Event('input'));
+            }
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!studentSchoolSearchInput.contains(e.target) && !studentSchoolDropdown.contains(e.target)) {
+                studentSchoolDropdown.classList.add('hidden');
+            }
+        });
+
+        function selectStudentSchool(schoolName) {
+            selectedStudentSchoolValue = schoolName;
+            selectedStudentSchoolName.textContent = schoolName;
+            studentSchoolSearchInput.classList.add('hidden');
+            selectedStudentSchool.classList.remove('hidden');
+            studentSchoolDropdown.classList.add('hidden');
+
+            // Populate grade options from database
+            const availableGrades = getGradesFromDB(schoolName);
+            studentGrade.innerHTML = '<option value="" disabled selected>Select a grade</option>';
+            availableGrades.forEach(grade => {
+                const opt = document.createElement('option');
+                opt.value = grade;
+                opt.textContent = grade + ' Grade';
+                studentGrade.appendChild(opt);
+            });
+
+            // Enable grade selector
+            studentGrade.disabled = false;
+            studentGrade.classList.remove('bg-slate-100', 'text-slate-400', 'cursor-not-allowed');
+            studentGrade.classList.add('bg-slate-50', 'text-slate-700');
+
+            // Reset subject
+            studentSubject.value = '';
+            studentSubjectSearch.value = '';
+            studentSubjectSearch.disabled = true;
+            studentSubjectSearch.classList.add('bg-slate-100', 'text-slate-400', 'cursor-not-allowed');
+            studentSubjectSearch.classList.remove('bg-slate-50', 'text-slate-700');
+            studentSubjectSearch.placeholder = 'Select grade first';
+            selectedStudentSubject.classList.add('hidden');
+            studentSubjectSearch.classList.remove('hidden');
+            studentSearchBtn.disabled = true;
+        }
+
+        function clearStudentSchoolSelection() {
+            selectedStudentSchoolValue = null;
+            studentSchoolSearchInput.classList.remove('hidden');
+            selectedStudentSchool.classList.add('hidden');
+            studentSchoolSearchInput.value = '';
+
+            // Disable grade and subject
+            studentGrade.disabled = true;
+            studentGrade.classList.add('bg-slate-100', 'text-slate-400', 'cursor-not-allowed');
+            studentGrade.classList.remove('bg-slate-50', 'text-slate-700');
+            studentGrade.innerHTML = '<option value="" disabled selected>Select school first</option>';
+            studentGrade.value = '';
+
+            studentSubject.value = '';
+            studentSubjectSearch.value = '';
+            studentSubjectSearch.disabled = true;
+            studentSubjectSearch.classList.add('bg-slate-100', 'text-slate-400', 'cursor-not-allowed');
+            studentSubjectSearch.classList.remove('bg-slate-50', 'text-slate-700');
+            studentSubjectSearch.placeholder = 'Select grade first';
+            selectedStudentSubject.classList.add('hidden');
+            studentSubjectSearch.classList.remove('hidden');
+            studentSearchBtn.disabled = true;
+        }
+
+        // Grade selection
+        studentGrade.addEventListener('change', () => {
+            const grade = studentGrade.value;
+            if (!grade || !selectedStudentSchoolValue) return;
+
+            // Populate subject options from database
+            const availableSubjects = getSubjectsFromDB(selectedStudentSchoolValue, grade);
+            
+            // Enable subject search
+            studentSubjectSearch.disabled = false;
+            studentSubjectSearch.classList.remove('bg-slate-100', 'text-slate-400', 'cursor-not-allowed');
+            studentSubjectSearch.classList.add('bg-slate-50', 'text-slate-700');
+            studentSubjectSearch.placeholder = 'Search subjects...';
+
+            // Reset subject
+            studentSubject.value = '';
+            studentSubjectSearch.value = '';
+            selectedStudentSubject.classList.add('hidden');
+            studentSubjectSearch.classList.remove('hidden');
+            studentSearchBtn.disabled = true;
+        });
+
+        // Subject search
+        studentSubjectSearch.addEventListener('input', (e) => {
+            const grade = studentGrade.value;
+            if (!grade || !selectedStudentSchoolValue) return;
+
+            const query = e.target.value.toLowerCase();
+            const availableSubjects = getSubjectsFromDB(selectedStudentSchoolValue, grade);
+            const filtered = query ? availableSubjects.filter(s => s.toLowerCase().includes(query)) : availableSubjects;
+
+            studentSubjectDropdown.innerHTML = '';
+
+            if (filtered.length === 0) {
+                studentSubjectDropdown.innerHTML = '<div class="p-4 text-sm text-slate-500 text-center">No subjects found</div>';
+            } else {
+                filtered.forEach(subject => {
+                    const item = document.createElement('div');
+                    item.className = 'px-4 py-2.5 text-sm text-slate-700 hover:bg-indigo-50 hover:text-indigo-700 cursor-pointer transition-colors';
+                    item.textContent = subject;
+                    item.onclick = () => selectStudentSubject(subject);
+                    studentSubjectDropdown.appendChild(item);
+                });
+            }
+            studentSubjectDropdown.classList.remove('hidden');
+        });
+
+        studentSubjectSearch.addEventListener('focus', () => {
+            if (!studentSubjectSearch.disabled) {
+                if (studentSubjectSearch.value.length > 0) {
+                    studentSubjectSearch.dispatchEvent(new Event('input'));
+                } else {
+                    // Show all subjects from DB
+                    const grade = studentGrade.value;
+                    if (grade && selectedStudentSchoolValue) {
+                        const availableSubjects = getSubjectsFromDB(selectedStudentSchoolValue, grade);
+                        studentSubjectDropdown.innerHTML = '';
+                        availableSubjects.forEach(subject => {
+                            const item = document.createElement('div');
+                            item.className = 'px-4 py-2.5 text-sm text-slate-700 hover:bg-indigo-50 hover:text-indigo-700 cursor-pointer transition-colors';
+                            item.textContent = subject;
+                            item.onclick = () => selectStudentSubject(subject);
+                            studentSubjectDropdown.appendChild(item);
+                        });
+                        studentSubjectDropdown.classList.remove('hidden');
+                    }
+                }
+            }
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!studentSubjectSearch.contains(e.target) && !studentSubjectDropdown.contains(e.target)) {
+                studentSubjectDropdown.classList.add('hidden');
+            }
+        });
+
+        function selectStudentSubject(subjectName) {
+            studentSubject.value = subjectName;
+            selectedStudentSubjectName.textContent = subjectName;
+            studentSubjectSearch.classList.add('hidden');
+            selectedStudentSubject.classList.remove('hidden');
+            studentSubjectDropdown.classList.add('hidden');
+
+            // Enable search button
+            studentSearchBtn.disabled = false;
+        }
+
+        function clearStudentSubjectSelection() {
+            studentSubject.value = '';
+            studentSubjectSearch.classList.remove('hidden');
+            selectedStudentSubject.classList.add('hidden');
+            studentSubjectSearch.value = '';
+            studentSubjectSearch.focus();
+            studentSearchBtn.disabled = true;
+        }
+
+        // Search papers
+        function searchStudentPapers() {
+            const school = selectedStudentSchoolValue;
+            const grade = studentGrade.value;
+            const subject = studentSubject.value;
+
+            if (!school || !grade || !subject) {
+                showToast('Please select school, grade, and subject', 'error');
+                return;
+            }
+
+            // Filter papers
+            const filteredPapers = papers.filter(p => 
+                p.school === school && 
+                p.grade === grade && 
+                p.subject === subject
+            );
+
+            // Update papers section title
+            document.getElementById('papersSectionTitle').textContent = `${subject} - ${grade} Grade`;
+
+            // Show papers section
+            document.getElementById('papersSection').classList.remove('hidden');
+
+            // Render filtered papers
+            renderFilteredPapers(filteredPapers);
+
+            // Scroll to papers
+            document.getElementById('papersSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function renderFilteredPapers(filteredPapers) {
+            const papersList = document.getElementById('papersList');
+            const emptyState = document.getElementById('emptyState');
+            papersList.innerHTML = '';
+
+            if (filteredPapers.length === 0) {
+                emptyState.classList.remove('hidden');
+            } else {
+                emptyState.classList.add('hidden');
+                filteredPapers.forEach(paper => {
+                    const card = document.createElement('div');
+                    card.className = 'bg-white rounded-2xl p-5 border border-slate-100 shadow-sm hover:shadow-md transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-4 group fade-in';
+
+                    const subjectColors = {
+                        'Maths': 'bg-blue-50 text-blue-700 border-blue-100',
+                        'Physics': 'bg-purple-50 text-purple-700 border-purple-100',
+                        'Chemistry': 'bg-amber-50 text-amber-700 border-amber-100',
+                        'Biology': 'bg-emerald-50 text-emerald-700 border-emerald-100',
+                        'English': 'bg-rose-50 text-rose-700 border-rose-100',
+                        'CS': 'bg-cyan-50 text-cyan-700 border-cyan-100',
+                        'IP': 'bg-violet-50 text-violet-700 border-violet-100',
+                        'Economics': 'bg-orange-50 text-orange-700 border-orange-100',
+                        'Accountancy': 'bg-teal-50 text-teal-700 border-teal-100',
+                        'Psychology': 'bg-pink-50 text-pink-700 border-pink-100',
+                        'Business Studies': 'bg-indigo-50 text-indigo-700 border-indigo-100',
+                        'Science': 'bg-green-50 text-green-700 border-green-100',
+                        'Social Science': 'bg-yellow-50 text-yellow-700 border-yellow-100',
+                        'Malayalam': 'bg-red-50 text-red-700 border-red-100',
+                        'Hindi': 'bg-fuchsia-50 text-fuchsia-700 border-fuchsia-100',
+                        'Sanskrit': 'bg-lime-50 text-lime-700 border-lime-100',
+                        'Computer': 'bg-sky-50 text-sky-700 border-sky-100'
+                    };
+                    const colorClass = subjectColors[paper.subject] || 'bg-slate-50 text-slate-700 border-slate-100';
+
+                    card.innerHTML = `
+                        <div class="flex items-start gap-4 flex-1">
+                            <div class="w-12 h-12 rounded-xl ${colorClass} flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="file-text" class="w-6 h-6"></i>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <div class="flex items-center gap-2 flex-wrap">
+                                    <h3 class="font-semibold text-slate-900">${paper.subject}</h3>
+                                    <span class="px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-700 text-xs font-medium border border-indigo-100">${paper.examName}</span>
+                                </div>
+                                <p class="text-sm text-slate-500 mt-1">${paper.grade} Grade</p>
+                                <div class="flex items-center gap-3 mt-2 flex-wrap">
+                                    <span class="text-xs text-slate-400 flex items-center gap-1"><i data-lucide="calendar" class="w-3 h-3"></i> ${paper.date}</span>
+                                    <span class="text-xs text-slate-400 truncate max-w-[150px]" title="${paper.fileName}"><i data-lucide="file" class="w-3 h-3"></i> ${paper.fileName}</span>
+                                    ${paper.answerKeyFileName ? `<span class="text-xs text-amber-600 font-medium flex items-center gap-1 bg-amber-50 px-2 py-0.5 rounded-md"><i data-lucide="key" class="w-3 h-3"></i> Answer Key Included</span>` : ''}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2 sm:justify-end">
+                            <button onclick="openViewModal(${paper.id}, '${paper.fileName}')" class="px-4 py-2.5 rounded-xl bg-indigo-50 text-indigo-700 text-sm font-medium hover:bg-indigo-100 transition-all flex items-center gap-2" title="Read Online">
+                                <i data-lucide="book-open" class="w-4 h-4"></i> Read
+                            </button>
+                            <a href="/uploads/${paper.filePath.split('/').pop()}" download="${paper.fileName}" class="px-4 py-2.5 rounded-xl bg-slate-900 text-white text-sm font-medium hover:bg-slate-800 transition-all shadow-md hover:shadow-lg flex items-center gap-2" title="Download Question Paper">
+                                <i data-lucide="download" class="w-4 h-4"></i> Q.Paper
+                            </a>
+                            ${paper.answerKeyFileName ? `
+                            <a href="/uploads/${paper.answerKeyPath.split('/').pop()}" download="${paper.answerKeyFileName}" class="px-4 py-2.5 rounded-xl bg-amber-500 text-white text-sm font-medium hover:bg-amber-600 transition-all shadow-md hover:shadow-lg flex items-center gap-2" title="Download Answer Key">
+                                <i data-lucide="key" class="w-4 h-4"></i> Key
+                            </a>` : ''}
+                        </div>
+                    `;
+                    papersList.appendChild(card);
+                });
+                lucide.createIcons();
+            }
         }
 
         // --- UPLOAD LOGIC ---
@@ -531,15 +1102,109 @@
             answerKeyPreview.classList.add('hidden');
         });
 
+        // --- GRADE-DEPENDENT SUBJECT SELECTOR ---
+        const subjectsByGrade = {
+            '8th': ['English', 'Maths', 'Science', 'Social Science', 'Malayalam', 'Hindi', 'Sanskrit', 'Computer'],
+            '9th': ['English', 'Maths', 'Science', 'Social Science', 'Malayalam', 'Hindi', 'Sanskrit', 'Computer'],
+            '10th': ['English', 'Maths', 'Science', 'Social Science', 'Malayalam', 'Hindi', 'Sanskrit', 'Computer'],
+            '11th': ['Maths', 'CS', 'English', 'IP', 'Physics', 'Chemistry', 'Biology', 'Accountancy', 'Economics', 'Psychology', 'Business Studies'],
+            '12th': ['Maths', 'CS', 'English', 'IP', 'Physics', 'Chemistry', 'Biology', 'Accountancy', 'Economics', 'Psychology', 'Business Studies']
+        };
+
+        const gradeSelect = document.getElementById('grade');
+        const subjectSearch = document.getElementById('subjectSearch');
+        const subjectDropdown = document.getElementById('subjectDropdown');
+        const subjectInput = document.getElementById('subject');
+        const selectedSubjectDisplay = document.getElementById('selectedSubjectDisplay');
+        const selectedSubjectName = document.getElementById('selectedSubjectName');
+
+        gradeSelect.addEventListener('change', () => {
+            // Reset subject selection when grade changes
+            subjectInput.value = '';
+            selectedSubjectDisplay.classList.add('hidden');
+            subjectSearch.value = '';
+            
+            // Enable subject search
+            subjectSearch.disabled = false;
+            subjectSearch.classList.remove('bg-slate-100', 'cursor-not-allowed');
+            subjectSearch.classList.add('bg-slate-50');
+            subjectSearch.placeholder = 'Search subjects...';
+            
+            // Show all subjects for selected grade
+            renderSubjectDropdown('');
+        });
+
+        subjectSearch.addEventListener('input', (e) => {
+            renderSubjectDropdown(e.target.value);
+        });
+
+        subjectSearch.addEventListener('focus', () => {
+            if (!subjectSearch.disabled) {
+                renderSubjectDropdown(subjectSearch.value);
+            }
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!subjectSearch.contains(e.target) && !subjectDropdown.contains(e.target)) {
+                subjectDropdown.classList.add('hidden');
+            }
+        });
+
+        function renderSubjectDropdown(query) {
+            subjectDropdown.innerHTML = '';
+            const grade = gradeSelect.value;
+            
+            if (!grade) {
+                subjectDropdown.innerHTML = '<div class="p-4 text-sm text-slate-500 text-center">Please select a grade first</div>';
+                subjectDropdown.classList.remove('hidden');
+                return;
+            }
+
+            const subjects = subjectsByGrade[grade] || [];
+            const filtered = query ? subjects.filter(s => s.toLowerCase().includes(query.toLowerCase())) : subjects;
+            
+            if (filtered.length === 0) {
+                subjectDropdown.innerHTML = '<div class="p-4 text-sm text-slate-500 text-center">No subjects found</div>';
+            } else {
+                filtered.forEach(subject => {
+                    const item = document.createElement('div');
+                    item.className = 'px-4 py-2.5 text-sm text-slate-700 hover:bg-indigo-50 hover:text-indigo-700 cursor-pointer transition-colors';
+                    item.textContent = subject;
+                    item.onclick = () => selectSubject(subject);
+                    subjectDropdown.appendChild(item);
+                });
+            }
+            subjectDropdown.classList.remove('hidden');
+        }
+
+        function selectSubject(subjectName) {
+            subjectInput.value = subjectName;
+            selectedSubjectName.textContent = subjectName;
+            selectedSubjectDisplay.classList.remove('hidden');
+            subjectSearch.classList.add('hidden');
+            subjectDropdown.classList.add('hidden');
+        }
+
+        function clearSubjectSelection() {
+            subjectInput.value = '';
+            selectedSubjectDisplay.classList.add('hidden');
+            subjectSearch.classList.remove('hidden');
+            subjectSearch.value = '';
+            subjectSearch.focus();
+        }
+
         document.getElementById('uploadForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             if (currentUser.role !== 'teacher') return showToast('Only authenticated teachers can upload.', 'error');
             if (!currentFile) return showToast('Please select a question paper.', 'error');
+            if (!document.getElementById('grade').value) return showToast('Please select a grade.', 'error');
+            if (!subjectInput.value) return showToast('Please select a subject.', 'error');
 
             const formData = new FormData();
             formData.append('examName', document.getElementById('examName').value);
+            formData.append('school', currentUser.school);
+            formData.append('grade', document.getElementById('grade').value);
             formData.append('subject', document.getElementById('subject').value);
-            formData.append('year', document.getElementById('year').value);
             formData.append('questionPaper', currentFile);
             if (currentAnswerKey) {
                 formData.append('answerKey', currentAnswerKey);
@@ -554,6 +1219,16 @@
                 if (!response.ok) throw new Error('Upload failed');
 
                 document.getElementById('uploadForm').reset();
+                // Reset subject selector UI
+                subjectInput.value = '';
+                selectedSubjectDisplay.classList.add('hidden');
+                subjectSearch.classList.remove('hidden');
+                subjectSearch.value = '';
+                subjectSearch.disabled = true;
+                subjectSearch.classList.remove('bg-slate-50');
+                subjectSearch.classList.add('bg-slate-100', 'cursor-not-allowed');
+                subjectSearch.placeholder = 'Select a grade first, then search subjects...';
+                
                 currentFile = null; currentAnswerKey = null;
                 fileInput.value = ''; answerKeyInput.value = '';
                 dropZoneContent.classList.remove('hidden'); filePreview.classList.add('hidden');
@@ -612,13 +1287,23 @@
                     card.className = 'bg-white rounded-2xl p-5 border border-slate-100 shadow-sm hover:shadow-md transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-4 group fade-in';
                     
                     const subjectColors = {
-                        'Mathematics': 'bg-blue-50 text-blue-700 border-blue-100',
+                        'Maths': 'bg-blue-50 text-blue-700 border-blue-100',
                         'Physics': 'bg-purple-50 text-purple-700 border-purple-100',
                         'Chemistry': 'bg-amber-50 text-amber-700 border-amber-100',
                         'Biology': 'bg-emerald-50 text-emerald-700 border-emerald-100',
-                        'History': 'bg-rose-50 text-rose-700 border-rose-100',
-                        'Literature': 'bg-pink-50 text-pink-700 border-pink-100',
-                        'Computer Science': 'bg-cyan-50 text-cyan-700 border-cyan-100'
+                        'English': 'bg-rose-50 text-rose-700 border-rose-100',
+                        'CS': 'bg-cyan-50 text-cyan-700 border-cyan-100',
+                        'IP': 'bg-violet-50 text-violet-700 border-violet-100',
+                        'Economics': 'bg-orange-50 text-orange-700 border-orange-100',
+                        'Accountancy': 'bg-teal-50 text-teal-700 border-teal-100',
+                        'Psychology': 'bg-pink-50 text-pink-700 border-pink-100',
+                        'Business Studies': 'bg-indigo-50 text-indigo-700 border-indigo-100',
+                        'Science': 'bg-green-50 text-green-700 border-green-100',
+                        'Social Science': 'bg-yellow-50 text-yellow-700 border-yellow-100',
+                        'Malayalam': 'bg-red-50 text-red-700 border-red-100',
+                        'Hindi': 'bg-fuchsia-50 text-fuchsia-700 border-fuchsia-100',
+                        'Sanskrit': 'bg-lime-50 text-lime-700 border-lime-100',
+                        'Computer': 'bg-sky-50 text-sky-700 border-sky-100'
                     };
                     const colorClass = subjectColors[paper.subject] || 'bg-slate-50 text-slate-700 border-slate-100';
                     const canDelete = currentUser.role === 'teacher';
@@ -633,7 +1318,7 @@
                                     <h3 class="font-semibold text-slate-900">${paper.subject}</h3>
                                     <span class="px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-700 text-xs font-medium border border-indigo-100">${paper.examName}</span>
                                 </div>
-                                <p class="text-sm text-slate-500 mt-1">${paper.year}</p>
+                                <p class="text-sm text-slate-500 mt-1">${paper.school} • ${paper.grade} Grade</p>
                                 <div class="flex items-center gap-3 mt-2 flex-wrap">
                                     <span class="text-xs text-slate-400 flex items-center gap-1"><i data-lucide="calendar" class="w-3 h-3"></i> ${paper.date}</span>
                                     <span class="text-xs text-slate-400 truncate max-w-[150px]" title="${paper.fileName}"><i data-lucide="file" class="w-3 h-3"></i> ${paper.fileName}</span>
@@ -808,6 +1493,6 @@
 
         initApp();
     </script>
-<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v833ccba57c9e4d2798f2e76cebdd09a11778172276447" integrity="sha512-57MDmcccJXYtNnH+ZiBwzC4jb2rvgVCEokYN+L/nLlmO8rfYT/gIpW2A569iJ/3b+0UEasghjuZH/ma3wIs/EQ==" data-cf-beacon='{"version":"2024.11.0","token":"75124c326cb447fe934cde04713ae013","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v4513226cdae34746b4dedf0b4dfa099e1781791509496" integrity="sha512-ZE9pZaUXND66v380QUtch/5sE9tPFh2zg45pR2PB0CVkCtOREv2AJKkSidISWkysEuQ0EH8faUU5du78bx87UQ==" data-cf-beacon='{"version":"2024.11.0","token":"75124c326cb447fe934cde04713ae013","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
 </body>
 </html>
